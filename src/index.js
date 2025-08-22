@@ -1,5 +1,9 @@
-// 1. Import the math module
+const {add,subtract,multiply,divide,randomInt,randomTo50}= require('../lib/math.js');
 // and use it in the application
+
+const readline = require('node:readline');
+const { stdin: input, stdout: output } = require("node:process");   
+const rl = readline.createInterface({ input, output });
 
 // TASK 1:
 // Make simple calculator app that asks the user for operation to make
@@ -10,11 +14,31 @@
 // If the user wants to continue, the application will repeat the process.
 // If the user does not want to continue, the application will exit.
 
+function calculate(expression) {
+    expression = expression.replace(/\s+/g, '');
+    const match = expression.match(/^(\d+)\s*([+\-*/])\s*(\d+)$/);
+    if (!match) return "Invalid operation";
+
+    const a = parseFloat(match[1]);
+    const operator = match[2];
+    const b = parseFloat(match[3]);
+
+    switch (operator) {
+        case "+": return add(a, b);
+        case "-": return subtract(a, b);
+        case "*": return multiply(a, b);
+        case "/": return divide(a, b);
+    }
+}
+rl.question("Enter operation (e.g. 10+5): ", (input) => {
+  console.log("Result:", calculate(input));
+  rl.close();
+});
 
 
 // TASK 2 (Bouns 50 points):
-// Make a guessing game that asks the user to guess a number between 0 and 50.
-// The application will generate a random number between 0 and 50 using the randomTo50 function.
+// Make a guessing game that asks the user to guess a number between 1 and 50.
+// The application will generate a random number between 1 and 50 using the randomTo50 function.
 // The application will then ask the user to guess the number.
 // The user has 5 attempts to guess the number. if the attempt is wrong, the application will print "Try again 🤔" to the console.
 // If the user does not guess the number correctly 5 times, the application will print "You lost the game!! try again 🤔" to the console.
