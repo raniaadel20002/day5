@@ -5,6 +5,27 @@ const readline = require('node:readline');
 const { stdin: input, stdout: output } = require("node:process");
 const rl = readline.createInterface({ input, output });
 
+function mainMenu() {
+  console.log("Choose an option:");
+  console.log("1. Calculator");
+  console.log("2. Guessing Game");
+  console.log("3. Personal Questions");
+
+  rl.question("Enter your choice (1, 2 or 3): ", (choice) => {
+    if (choice === "1") {
+      calculator();
+    } else if (choice === "2") {
+      guessingGame();
+    } else if (choice === "3") {
+      askQuestions();
+    } else {
+      console.log("Invalid choice!");
+      rl.close();
+    }
+  });
+}
+
+mainMenu();
 // TASK 1:
 // Make simple calculator app that asks the user for operation to make
 // The application will parse the given operation and call the appropriate function
@@ -75,6 +96,7 @@ function guessingGame() {
 }
 
 guessingGame();
+
 // TASK 3 (Bouns 50 points):
 // Make a function that ask the user the following questions:
 // 1. What is your name?
@@ -103,3 +125,5 @@ function askQuestions() {
   });
 }
 askQuestions();
+
+
