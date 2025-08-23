@@ -44,14 +44,45 @@ rl.question("Enter operation (e.g. 10+5): ", (input) => {
 // If the user does not guess the number correctly 5 times, the application will print "You lost the game!! try again 🤔" to the console.
 // If the user guesses the number correctly, the application will print "You won the game!! congrats 🥳🥳" to the console.
 
+function guessingGame() {
+  function randomTo50() {
+    return Math.floor(Math.random() * 50) + 1;
+  }
+
+  const secretNumber = randomTo50();
+  let attempts = 0;
+  const maxAttempts = 5;
+
+  function askGuess() {
+    rl.question(`Guess a number between 1 and 50 (Attempt ${attempts + 1}/${maxAttempts}): `, (guess) => {
+      attempts++;
+      const num = parseInt(guess);
+
+      if (num === secretNumber) {
+        console.log("You won the game!! congrats 🥳🥳");
+        rl.close();
+      } else if (attempts >= maxAttempts) {
+        console.log(`You lost the game!! The number was ${secretNumber}. Try again 🤔`);
+        rl.close();
+      } else {
+        console.log("Try again 🤔");
+        askGuess();
+      }
+    });
+  }
+
+  askGuess();
+}
+
+guessingGame();
 // TASK 3 (Bouns 50 points):
 // Make a function that ask the user the following questions:
 // 1. What is your name?
 // 2. What is your age? (if age is not a number or is less than 10, the application will print "Invalid age" and end the program)
 // 3. What is the Favorite programming language
 // Then after the user answers all the questions, the application will print the following.
-// console.log("\n--- Summary ---");
-// console.log(`Name: ${name || "(no name)"}`);
-// console.log(`Age: ${age}`);
-// console.log(`Favorite language: ${fav || "(not specified)"}`);
-// console.log("----------------\n");
+console.log("\n--- Summary ---");
+console.log(`Name: ${name || "(no name)"}`);
+console.log(`Age: ${age}`);
+console.log(`Favorite language: ${fav || "(not specified)"}`);
+console.log("----------------\n");
