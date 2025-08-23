@@ -1,8 +1,8 @@
-const {add,subtract,multiply,divide,randomInt,randomTo50}= require('../lib/math.js');
+const { add, subtract, multiply, divide, randomInt, randomTo50 } = require('../lib/math.js');
 // and use it in the application
 
 const readline = require('node:readline');
-const { stdin: input, stdout: output } = require("node:process");   
+const { stdin: input, stdout: output } = require("node:process");
 const rl = readline.createInterface({ input, output });
 
 // TASK 1:
@@ -31,8 +31,8 @@ function calculate(expression) {
     }
 }
 rl.question("Enter operation (e.g. 10+5): ", (input) => {
-  console.log("Result:", calculate(input));
-  rl.close();
+    console.log("Result:", calculate(input));
+    rl.close();
 });
 
 
@@ -45,33 +45,33 @@ rl.question("Enter operation (e.g. 10+5): ", (input) => {
 // If the user guesses the number correctly, the application will print "You won the game!! congrats 🥳🥳" to the console.
 
 function guessingGame() {
-  function randomTo50() {
-    return Math.floor(Math.random() * 50) + 1;
-  }
+    function randomTo50() {
+        return Math.floor(Math.random() * 50) + 1;
+    }
 
-  const secretNumber = randomTo50();
-  let attempts = 0;
-  const maxAttempts = 5;
+    const secretNumber = randomTo50();
+    let attempts = 0;
+    const maxAttempts = 5;
 
-  function askGuess() {
-    rl.question(`Guess a number between 1 and 50 (Attempt ${attempts + 1}/${maxAttempts}): `, (guess) => {
-      attempts++;
-      const num = parseInt(guess);
+    function askGuess() {
+        rl.question(`Guess a number between 1 and 50 (Attempt ${attempts + 1}/${maxAttempts}): `, (guess) => {
+            attempts++;
+            const num = parseInt(guess);
 
-      if (num === secretNumber) {
-        console.log("You won the game!! congrats 🥳🥳");
-        rl.close();
-      } else if (attempts >= maxAttempts) {
-        console.log(`You lost the game!! The number was ${secretNumber}. Try again 🤔`);
-        rl.close();
-      } else {
-        console.log("Try again 🤔");
-        askGuess();
-      }
-    });
-  }
+            if (num === secretNumber) {
+                console.log("You won the game!! congrats 🥳🥳");
+                rl.close();
+            } else if (attempts >= maxAttempts) {
+                console.log(`You lost the game!! The number was ${secretNumber}. Try again 🤔`);
+                rl.close();
+            } else {
+                console.log("Try again 🤔");
+                askGuess();
+            }
+        });
+    }
 
-  askGuess();
+    askGuess();
 }
 
 guessingGame();
@@ -81,8 +81,25 @@ guessingGame();
 // 2. What is your age? (if age is not a number or is less than 10, the application will print "Invalid age" and end the program)
 // 3. What is the Favorite programming language
 // Then after the user answers all the questions, the application will print the following.
-console.log("\n--- Summary ---");
-console.log(`Name: ${name || "(no name)"}`);
-console.log(`Age: ${age}`);
-console.log(`Favorite language: ${fav || "(not specified)"}`);
-console.log("----------------\n");
+function askQuestions() {
+    rl.question("What is your name? ", (name) => {
+        rl.question("What is your age? ", (ageInput) => {
+            const age = parseInt(ageInput);
+
+            if (isNaN(age) || age < 10) {
+                console.log("Invalid age");
+                rl.close();
+                return;
+            }
+
+            rl.question("What is your Favorite programming language? ", (fav) => {
+                console.log("\n--- Summary ---");
+                console.log(`Name: ${name || "(no name)"}`);
+                console.log(`Age: ${age}`);
+                console.log(`Favorite language: ${fav || "(not specified)"}`);
+                console.log("----------------\n");
+              });
+    });
+  });
+}
+askQuestions();
